@@ -17,6 +17,11 @@ Por ahora:
 * Google Meet
 * Zoom Meetings
 
+### Ideas de integración
+
+* Con un dispositivo Android, creando un comando en la aplicación [KDE Connect](https://kdeconnect.kde.org/).
+* Con algún auricular que tenga botón de Play/Pause, usando [AutoKey](https://github.com/autokey/autokey) para ejecutar el script al presionarlo.
+
 ### ¿Cómo funciona?
 
 En esencia, utiliza [xdotool](https://www.semicomplete.com/projects/xdotool/) para buscar una ventana con cierto nombre y luego envía la combinación de teclas que realiza la acción solicitada en esa aplicación. 
