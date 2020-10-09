@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+COMMAND=$1
+
+# Como no tenemos ninguna estructura de datos asociativa, representamos a las plataformas con un string.
+# El formato es el siguiente:
+# window title|toggle video shortcut|toggle mic shortcut
+platforms=(
+  "Meet -|ctrl+e|ctrl+d"        # Google Meet
+  "Zoom Meeting|alt+v|alt+a"    # Zoom Meetings
+)
+
+window_title_index=0
+video_shortcut_index=1
+mic_shortcut_index=2
+
+send_key() {
+  platform=$1
+  shortcut=$2
+  xdotool search "$platform" windowactivate --sync key --clearmodifiers $shortcut
+}
+
+send_shortcut() {
+  shortcut_index=$1
+  for element in "${platforms[@]}"
+  do
+    IFS='|' read -r -a data <<< "$element"
+    send_key "${data[$window_title_index]}" ${data[$shortcut_index]}
+  done  
+}
+
+toggle_mic() {
+  send_shortcut $mic_shortcut_index
+}
+
+toggle_video() {
+  send_shortcut $video_shortcut_index
+}
+
+case $COMMAND in
+  mic)
+    toggle_mic
+    ;;
+  video)
+    toggle_video
+    ;;
+  *)
+    echo "El comando $COMMAND no existe :("
+    exit 1
+    ;;
+esac
